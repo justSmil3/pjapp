@@ -65,3 +65,13 @@ class Stats(models.Model):
     def __str__(self): 
         return self.date
     
+class Message(models.Model):
+    user = models.ForeignKey(User, related_name="messages", on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, related_name="created_messages", on_delete=models.CASCADE)
+    Message = models.TextField(max_length=400)
+    created = models.DateTimeField(auto_now_add=True)
+    
+class Menti(models.Model):
+    mentor = models.ForeignKey(User, related_name="menti", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name= "mentor", on_delete=models.CASCADE)
+    name = models.TextField(default="") 

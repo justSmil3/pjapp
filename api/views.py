@@ -3,9 +3,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import permissions
 from .serializers import \
-    TrackSerializer, TaskSerializer, SubtaskSerializer, UserSerializer, TaskWeightSerializer, TokenSerializer, StatsSerializer
+    MentiSerializer, TrackSerializer, TaskSerializer, SubtaskSerializer, UserSerializer, TaskWeightSerializer, TokenSerializer, StatsSerializer, MessageSerializer, \
+    MentiSerializer
 from rest_framework import status
-from .models import Task, SubTask, Track, TaskWeight, Stats
+from .models import Message, Task, SubTask, Track, TaskWeight, Stats, Message, Menti
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from knox.models import AuthToken
@@ -228,6 +229,17 @@ def getWeights(request):
     serializer = TaskWeightSerializer(weights, many=True)
     return Response(serializer.data)
 
+@api_view(['PUT'])
+def updateWeight(request, pk):
+    data = request.data
+    weight = TaskWeight.objects.get(id=pk)
+
+    serializer = TaskWeightSerializer(weight, data=data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
 @api_view(['GET'])
 def getCountedWeights(request, count):
     weights = request.user.task_weight.filter().order_by("-weight")[:count]
@@ -249,13 +261,12 @@ def addWeightScore(request):
     return Response(track.score)
 
 @api_view(['GET'])
-@permission_classes([permissions.AllowAny])
 def getStats(request, count):
     # tracks = request.user.tracks.filter().order_by("created")
     tracks = request.user.tracks.filter().order_by("created")
     dates = [] 
     for i in tracks:
-         if(len(dates) < 5):
+         if(len(dates) < count):
              if not dates.__contains__(i.created.date()):
                     dates.append(i.created.date())
     
@@ -277,3 +288,152 @@ def getStats(request, count):
         statlist.append(stats)
     serializer = StatsSerializer(statlist, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getUnweightedStats(request, pk, count):
+    # tracks = request.user.tracks.filter().order_by("created")
+    tracks = User.objects.get(id=pk).tracks.filter().order_by("created")
+    dates = [] 
+    for i in tracks:
+         if(len(dates) < count):
+             if not dates.__contains__(i.created.date()):
+                    dates.append(i.created.date())
+    
+    statlist = []
+    
+    weights = TaskWeight.objects.all()
+    usedWeights = []
+    for i in dates:
+        score = 0
+        for track in tracks:
+            if track.created.date() == i:
+                if track.score > 2:
+                    score += 1
+            
+        stats = Stats.objects.create(
+        date = i,
+        score = score
+        );
+        statlist.append(stats)
+    serializer = StatsSerializer(statlist, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getWeightedStats(request, pk, count):
+    # tracks = request.user.tracks.filter().order_by("created")
+    tracks = User.objects.get(id=pk).tracks.filter().order_by("created")
+    dates = [] 
+    for i in tracks:
+         if(len(dates) < count):
+             if not dates.__contains__(i.created.date()):
+                    dates.append(i.created.date())
+    
+    statlist = []
+    
+    weights = TaskWeight.objects.all()
+    usedWeights = []
+    for i in dates:
+        score = 0
+        for track in tracks:
+            if track.created.date() == i:
+                if track.score == 2:
+                    score += 1
+            
+        stats = Stats.objects.create(
+        date = i,
+        score = score
+        );
+        statlist.append(stats)
+    serializer = StatsSerializer(statlist, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getUserStats(request, pk, count):
+    # tracks = request.user.tracks.filter().order_by("created")
+    tracks = User.objects.get(id=pk).tracks.filter().order_by("created")
+    dates = [] 
+    for i in tracks:
+         if(len(dates) < count):
+             if not dates.__contains__(i.created.date()):
+                    dates.append(i.created.date())
+    
+    statlist = []
+    
+    weights = TaskWeight.objects.all()
+    usedWeights = []
+    for i in dates:
+        score = 0
+        for track in tracks:
+            if track.created.date() == i:
+                 score += track.score
+                 print(track.score)
+            
+        stats = Stats.objects.create(
+        date = i,
+        score = score
+        );
+        statlist.append(stats)
+    serializer = StatsSerializer(statlist, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def createMessage(request):
+    message = request.data['message']
+    user = request.user
+    creator = User.objects.get(id=request.data["creator"])
+    
+    message_object = Message.objects.create(
+        message = message,
+        user = user,
+        creator = creator
+    )
+    
+    serializer = MessageSerializer(message_object, many=False)
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getMessage(request, count):
+    message = request.user.messages.all()[:count]
+    serializer = MessageSerializer(message, many=True)
+    
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def deleteMessage(request, pk):
+    message = request.user.messages.get(id=pk)
+    if not message == None:
+        message.delete()
+        return('message was deleted successfully')
+    else:
+        return('message does not exist for user')
+    
+@api_view(['GET'])
+def getMenti(request):
+    menti = request.user.menti.all()
+    for x in menti:
+        x.name = x.user.username
+    serializer = MentiSerializer(menti, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def createTaskWeight(request):
+    data = request.data
+    weight = TaskWeight.objects.create(
+        weight = int(data['weight']),
+        task = SubTask.objects.get(id = data["task"]),
+        user = User.objects.get(id = data["user"])
+    )
+    serializer = TaskWeightSerializer(weight, many=False)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getTaskWeightsOfUser(request, pk):
+    user = User.objects.get(id = pk)
+    weights = user.task_weight.all()
+    serializer = TaskWeightSerializer(weights, many=True)
+    return Response(serializer.data)
+
+    
+    

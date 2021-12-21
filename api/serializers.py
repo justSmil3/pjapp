@@ -1,6 +1,6 @@
 from django.db.models import fields
 from rest_framework.serializers import ModelSerializer
-from .models import Track, Task, SubTask, TaskWeight, Stats
+from .models import Track, Task, SubTask, TaskWeight, Stats, Message, Menti
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueTogetherValidator
@@ -56,3 +56,12 @@ class TokenSerializer(ModelSerializer):
         model = Token
         fields = '__all__'
         
+class MessageSerializer(ModelSerializer):
+    class Meta:
+        model = Message
+        fields = '__all__'
+        
+class MentiSerializer(ModelSerializer):
+    class Meta:
+        model = Menti
+        fields = '__all__'
