@@ -286,9 +286,7 @@ def getStats(request, count):
         score = score
         );
         statlist.append(stats)
-    res = statlist.reverse()
-    print(res)
-    serializer = StatsSerializer(res, many=True)
+    serializer = StatsSerializer(statlist, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
