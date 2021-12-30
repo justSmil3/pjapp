@@ -286,6 +286,7 @@ def getStats(request, count):
         score = score
         );
         statlist.append(stats)
+    statlist = statlist.reverse()
     serializer = StatsSerializer(statlist, many=True)
     return Response(serializer.data)
 
