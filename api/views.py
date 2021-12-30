@@ -263,7 +263,7 @@ def addWeightScore(request):
 @api_view(['GET'])
 def getStats(request, count):
     # tracks = request.user.tracks.filter().order_by("created")
-    tracks = request.user.tracks.filter().order_by("created")
+    tracks = request.user.tracks.filter().order_by("-created")
     dates = [] 
     for i in tracks:
          if(len(dates) < count):
