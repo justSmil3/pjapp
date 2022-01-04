@@ -293,7 +293,7 @@ def getStats(request, count):
 @api_view(['GET'])
 def getUnweightedStats(request, pk, count):
     # tracks = request.user.tracks.filter().order_by("created")
-    tracks = User.objects.get(id=pk).tracks.filter().order_by("created")
+    tracks = User.objects.get(id=pk).tracks.filter().order_by("-created")
     dates = [] 
     for i in tracks:
          if(len(dates) < count):
@@ -322,7 +322,7 @@ def getUnweightedStats(request, pk, count):
 @api_view(['GET'])
 def getWeightedStats(request, pk, count):
     # tracks = request.user.tracks.filter().order_by("created")
-    tracks = User.objects.get(id=pk).tracks.filter().order_by("created")
+    tracks = User.objects.get(id=pk).tracks.filter().order_by("-created")
     dates = [] 
     for i in tracks:
          if(len(dates) < count):
@@ -351,7 +351,7 @@ def getWeightedStats(request, pk, count):
 @api_view(['GET'])
 def getUserStats(request, pk, count):
     # tracks = request.user.tracks.filter().order_by("created")
-    tracks = User.objects.get(id=pk).tracks.filter().order_by("created")
+    tracks = User.objects.get(id=pk).tracks.filter().order_by("-created")
     dates = [] 
     for i in tracks:
          if(len(dates) < count):
