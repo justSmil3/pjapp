@@ -316,6 +316,7 @@ def getUnweightedStats(request, pk, count):
         score = score
         );
         statlist.append(stats)
+    statlist.reverse()
     serializer = StatsSerializer(statlist, many=True)
     return Response(serializer.data)
 
@@ -345,6 +346,7 @@ def getWeightedStats(request, pk, count):
         score = score
         );
         statlist.append(stats)
+    statlist.reverse()
     serializer = StatsSerializer(statlist, many=True)
     return Response(serializer.data)
 
@@ -374,6 +376,7 @@ def getUserStats(request, pk, count):
         score = score
         );
         statlist.append(stats)
+    statlist.reverse()
     serializer = StatsSerializer(statlist, many=True)
     return Response(serializer.data)
 
