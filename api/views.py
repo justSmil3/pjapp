@@ -168,6 +168,13 @@ def getSubtasks(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+def getSubtasksByTask(request, pk):
+    task = Task.objects.get(id=pk);
+    subtasks = task.subtask.all();
+    serializer = SubtaskSerializer(subtasks, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def getOSubtasks(request, pk):
     subtasks = SubTask.objects.all().order_by("-"+pk)
     serializer = SubtaskSerializer(subtasks, many=True)
