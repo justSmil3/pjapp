@@ -6,7 +6,7 @@ urlpatterns = [
         path('tasks/',views.getTasks),
         path('subtasks/',views.getSubtasks),
         path('subtasksByTask/<str:pk>/', views.getSubtasksByTask),
-        path('subtasksByTask/ordered/', views.getSubtasksOrderedByTask),
+        path('subtasksOrderedByTask/', views.getSubtasksOrderedByTask),
         path('osubtasks/<str:pk>/', views.getOSubtasks),
         path('tracks/',views.getTracks),
         path('tracks/create/', views.createTrack),
