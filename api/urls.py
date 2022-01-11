@@ -27,6 +27,8 @@ urlpatterns = [
         path('stats/<str:pk>/<int:count>/', views.getUserStats),
         path('weightedStats/<str:pk>/<int:count>/', views.getWeightedStats),
         path('unweightedStats/<str:pk>/<int:count>/', views.getUnweightedStats),
+        path('weightedUserStats/<int:count>/', views.getWeightedUserStats),
+        path('unweightedUserStats/<int:count>/', views.getUnweightedUserStats),
         path('addweightscore/', views.addWeightScore),
         path('messages/<int:count>/', views.getMessage),
         path('messages/add/', views.createMessage),

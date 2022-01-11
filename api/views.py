@@ -364,6 +364,66 @@ def getWeightedStats(request, pk, count):
     serializer = StatsSerializer(statlist, many=True)
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def getUnweightedUserStats(request, count):
+    tracks = request.user.tracks.filter().order_by("-created")
+    dates = [] 
+    for i in tracks:
+         if(len(dates) < count):
+             if not dates.__contains__(i.created.date()):
+                    dates.append(i.created.date())
+    
+    statlist = []
+    
+    weights = TaskWeight.objects.all()
+    usedWeights = []
+    for i in dates:
+        score = 0
+        for track in tracks:
+            if track.created.date() == i:
+                if track.score > 2:
+                    score += 1
+            
+        stats = Stats.objects.create(
+        date = i,
+        score = score
+        );
+        statlist.append(stats)
+    statlist.reverse()
+    serializer = StatsSerializer(statlist, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getWeightedUserStats(request, count):
+    tracks = request.user.tracks.filter().order_by("-created")
+    dates = [] 
+    for i in tracks:
+         if(len(dates) < count):
+             if not dates.__contains__(i.created.date()):
+                    dates.append(i.created.date())
+    
+    statlist = []
+    
+    weights = TaskWeight.objects.all()
+    usedWeights = []
+    for i in dates:
+        score = 0
+        for track in tracks:
+            if track.created.date() == i:
+                if track.score == 2:
+                    score += 1
+            
+        stats = Stats.objects.create(
+        date = i,
+        score = score
+        );
+        statlist.append(stats)
+    statlist.reverse()
+    serializer = StatsSerializer(statlist, many=True)
+    return Response(serializer.data)
+
+
 @api_view(['GET'])
 def getUserStats(request, pk, count):
     # tracks = request.user.tracks.filter().order_by("created")
