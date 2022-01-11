@@ -1,4 +1,5 @@
 from django.db.models.lookups import Contains, Range
+from django.db.models.query_utils import subclasses
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import permissions
@@ -171,6 +172,12 @@ def getSubtasks(request):
 def getSubtasksByTask(request, pk):
     task = Task.objects.get(id=pk);
     subtasks = task.subtask.all();
+    serializer = SubtaskSerializer(subtasks, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getSubtasksOrderedByTask(request):
+    subtasks = SubTask.objects.all().order_by("task")
     serializer = SubtaskSerializer(subtasks, many=True)
     return Response(serializer.data)
 
