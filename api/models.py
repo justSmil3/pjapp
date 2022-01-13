@@ -33,9 +33,7 @@ class Track(models.Model):
         KEINE_AUSFÜHRUNG = '0', 'keine ausführrung'
         GEMEINSAM_MIT_DEM_ARZT = '1', 'gemeinsam mit dem Arzt'
         UNTER_BEOBACHTUNG_DES_ARZTES = '2', 'unter Beobachtung des Arztes'
-        EIGENSTÄNDIG_VIELES_WIRD_NACHGEPRÜFT  = '3', 'eigenständig, Alles/Vieles wird nachgeprüft'
-        EIGENSTÄNDIG_WICHTIGES_WIRD_NACHGEPRÜFT = '4', 'eigenständig, Wichtiges wird nachgeprüft'
-        EIGENSTÄNDIG_WICHTIGES_WIRD_TELEFONISCH_NACHGEPRÜFT = '5', 'eigenständig, Wichtiges wird telefonisch nachgeprüft'
+        EIGENSTÄNDIG  = '3', 'eigenständig'
 
     task = models.ForeignKey(SubTask, related_name='track', on_delete=models.PROTECT)
     rating_0 = models.CharField(
