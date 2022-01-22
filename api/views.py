@@ -11,6 +11,7 @@ from .models import Message, Task, SubTask, Track, TaskWeight, Stats, Message, M
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from knox.models import AuthToken
+import json
 
 from api import serializers
 
@@ -514,4 +515,14 @@ def getTaskWeightsOfUser(request, pk):
     return Response(serializer.data)
 
     
-    
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def checkUserStatus(request):
+    user = request.user
+    res = "failed"
+    if not user.mentor.all():
+        res = "mentor"
+    elif not user.menti.all():
+        res = "menti"
+    return Response(json.dumps({'result': res}),
+                       content_type="application/json")

@@ -36,4 +36,5 @@ urlpatterns = [
         path('menti/', views.getMenti),
         path('taskweight/create/', views.createTaskWeight),
         path('taskweights/user/<str:pk>/', views.getTaskWeightsOfUser),
+        path('userStatus/', views.checkUserStatus),
 ]
