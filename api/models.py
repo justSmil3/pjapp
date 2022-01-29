@@ -41,11 +41,7 @@ class Track(models.Model):
         choices=Reviews.choices,
         default=Reviews.KEINE_AUSFÜHRUNG,
     )
-    rating_1 = models.CharField(
-        max_length=1,
-        choices=Reviews.choices,
-        default=Reviews.KEINE_AUSFÜHRUNG,
-    )
+    rating_1 = models.FloatField()
     user = models.ForeignKey(User, related_name='tracks', on_delete=models.CASCADE)
     score = models.IntegerField(default=2)
     created = models.DateTimeField(auto_now_add=True)
