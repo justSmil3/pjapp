@@ -475,8 +475,8 @@ def createMessage(request):
 @api_view(['GET'])
 def getMessage(request, start, count):
     message = request.user.messages.all() | request.user.created_messages.all()
-    if count + start > message.len():
-        count = message.len() - start
+    if count + start > len(message):
+        count = len(message) - start
         if count <= 0: 
             return Response()
     returnmessages = message.order_by("-created")[start:count+start]
