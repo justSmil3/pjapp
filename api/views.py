@@ -459,8 +459,8 @@ def getUserStats(request, pk, count):
 @api_view(['POST'])
 def createMessage(request):
     message = request.data['message']
-    user = request.user
-    creator = User.objects.get(id=request.data["creator"])
+    creator = request.user
+    user = User.objects.get(id=request.data["user"])
     
     message_object = Message.objects.create(
         message = message,
@@ -473,11 +473,29 @@ def createMessage(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def getMessage(request, count):
-    message = request.user.messages.all()[:count]
+def getMessage(request, start, count):
+    message = request.user.messages.all() | request.user.created_messages.all()
+    if count + start > returnmessages.len():
+        count = returnmessages.len() - start
+        if count <= 0: 
+            return Response()
+    returnmessages = message.order_by("-created")[start:count+start]
     serializer = MessageSerializer(message, many=True)
     
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getUserSpecificMessage(request, mentiId, start, count):
+    message = request.user.messages.filter(creator.id == mentiId) | request.user.created_messages.filter(user.id == mentiId)
+    if count + start > returnmessages.len():
+        count = returnmessages.len() - start
+        if count <= 0: 
+            return Response()
+    returnmessages = message.order_by("-created")[start:count+start]
+    serializer = MessageSerializer(message, many=True)
+    
+    return Response(serializer.data)
+
 
 @api_view(['DELETE'])
 def deleteMessage(request, pk):
@@ -525,4 +543,10 @@ def checkUserStatus(request):
     elif not user.menti.all():
         res = "menti"
     return Response(json.dumps({'result': res}),
+                       content_type="application/json")
+    
+@api_view(['GET'])
+def getMentorId(request):
+    metorid = request.user.mentor.first().id
+    return Response(json.dumps({'result': mentorid}),
                        content_type="application/json")
