@@ -478,7 +478,7 @@ def getMessage(request, start, count):
     if count + start > len(message):
         count = len(message) - start
         if count <= 0: 
-            return Response(json.dumps({'result': 'failed'}),
+            return Response(json.dumps({'res1': len(message), 'res2': len(Message.objects.all())}),
                        content_type="application/json")
     returnmessages = message.order_by("-created")[start:count+start]
     serializer = MessageSerializer(message, many=True)
