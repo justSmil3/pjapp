@@ -547,6 +547,6 @@ def checkUserStatus(request):
     
 @api_view(['GET'])
 def getMentorId(request):
-    metorid = request.user.mentor.first().id
+    mentorid = request.user.mentor.first().id
     return Response(json.dumps({'result': mentorid}),
                        content_type="application/json")
