@@ -463,7 +463,7 @@ def createMessage(request):
     user = User.objects.get(id=request.data["user"])
     
     message_object = Message.objects.create(
-        message = message,
+        Message = message,
         user = user,
         creator = creator
     )
