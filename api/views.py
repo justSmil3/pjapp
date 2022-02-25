@@ -198,7 +198,7 @@ def getSubtask(request, pk):
 
 @api_view(['GET'])
 def getMentiTracks(request, pk):
-    user = User.get(id=pk)
+    user = User.objects.get(id = pk)
     tracks = user.tracks.all()
     serializer = TrackSerializer(tracks, many=True)
     return Response(serializer.data)
