@@ -496,12 +496,12 @@ def getMessage(request, start, count):
 def getUserSpecificMessage(request, mentiId, start, count):
     # make sure to change that in the case that the user gets more than one mentor.
     message = User.objects.get(id=mentiId).created_messages.all() | request.user.created_messages.filter(user = User.objects.get(id=mentiId))
-    if count + start > returnmessages.len():
-        count = returnmessages.len() - start
+    if count + start > message.len():
+        count = message.len() - start
         if count <= 0: 
             return Response()
     returnmessages = message.order_by("-created")[start:count+start]
-    serializer = MessageSerializer(message, many=True)
+    serializer = MessageSerializer(returnmessages, many=True)
     
     return Response(serializer.data)
 
