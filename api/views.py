@@ -494,7 +494,8 @@ def getMessage(request, start, count):
 
 @api_view(['GET'])
 def getUserSpecificMessage(request, mentiId, start, count):
-    message = request.user.messages.filter(creator.id == mentiId) | request.user.created_messages.filter(user.id == mentiId)
+    # make sure to change that in the case that the user gets more than one mentor.
+    message = User.objects.get(id=mentiId).created_messages.all() | request.user.created_messages.filter(user.id == mentiId) 
     if count + start > returnmessages.len():
         count = returnmessages.len() - start
         if count <= 0: 
