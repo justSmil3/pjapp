@@ -265,10 +265,10 @@ def createTrack(request):
     try:
         track = Track.objects.get(task=task)
         serializer = TrackSerializer(track, data=request.data)
-        print(serializer.errors)
         if serializer.is_valid():
             print("hi")
             serializer.save()
+        print(str(serializer.errors))
     except:
     #Todo
         print('holii')
