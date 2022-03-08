@@ -255,7 +255,7 @@ def getTrackOnTask(request, pk):
     except Exception as e:
         return Response({
         'error': True,
-        'error_msg': e
+        'error_msg': str(e)
         })
 
 @api_view(['POST'])
