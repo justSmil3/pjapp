@@ -248,7 +248,7 @@ def getTrack(request, pk):
 def getTrackOnTask(request, pk):
     
     try:
-        track = request.user.tracks.get(task=Task.objects.get(id=pk))
+        track = request.user.tracks.get(task=SubTask.objects.get(id=pk))
         serializer = TrackSerializer(track, many=False)
         return Response(serializer.data)
     
