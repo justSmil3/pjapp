@@ -11,6 +11,7 @@ from .models import Message, Task, SubTask, Track, TaskWeight, Stats, Message, M
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from knox.models import AuthToken
+from django.core.mail import send_mail
 import json
 
 from api import serializers
@@ -38,6 +39,7 @@ def createUser(request):
 def login_user(request):
     username = request.data['username']
     password = request.data['password']
+    username = username.lower()
     user = authenticate(request, username = username, password = password)
     serializer = UserSerializer(user, many=False)
     if user is not None:
@@ -56,6 +58,32 @@ def logout_user(request):
     logout(request)
     return Response()
 
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+def forgot_password(request):
+    loginname = request.data['name'].lower()
+    user = None
+    try:
+        user = User.objects.get(email=loginname)
+    except DoesNotexist:
+        try:
+            user = User.objects.get(username=loginname)
+            
+        except DoesNotexist:
+            return Response({
+                    'error': True,
+                    'error_msg': serializer.error_messages,
+                    }, status=status.HTTP_400_BAD_REQUEST)
+    
+    send_mail(
+    'Forgot Password',
+    f'PJ app user {user.email} forgot his password',
+    'pjapp',
+    ['christian.lott@outlook.de'],
+    fail_silently=False,
+    )
+    
+    return Response()
 
 
 @api_view(['GET'])
