@@ -265,6 +265,7 @@ def createTrack(request):
     try:
         track = Track.objects.get(task=task)
         serializer = TrackSerializer(track, data=request.data)
+        print("stupid")
         if serializer.is_valid():
             print("hi")
             serializer.save()
