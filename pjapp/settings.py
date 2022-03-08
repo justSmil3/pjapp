@@ -152,8 +152,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 EMAILEMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = 'smtp-mail.outlook.de'
-EMAIL_HOST_USER = 'chritstian.lott@outlook.de'
-EMAIL_HOST_PASSWORD = 'kanu4ever'
-EMAIL_PORT = 25
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'PjAppMainz@gmail.com'
+EMAIL_HOST_PASSWORD = 'wedGDL8fEVwMqwmh'
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
