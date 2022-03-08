@@ -263,15 +263,17 @@ def createTrack(request):
     data = request.data
     task = SubTask.objects.get(name=data["task"])
     try:
-        track = Track.objects.get(task=task)
-        serializer = TrackSerializer(track, data=request.data)
-        if serializer.is_valid():
-            print("hi")
-            serializer.save()
-        print(str(serializer.errors))
+        track = Track.objects.filter(task=task).get(user=request.user)
+        track.rating_0=data["rating_0"]
+        track.rating_1=data["rating_1"]
+        track.save(update_fields=["rating_0", "rating_1"])
+        # serializer = TrackSerializer(track, data=request.data)
+        # if serializer.is_valid():
+        #     print("hi")
+        #     serializer.save()
+        # print(str(serializer.errors))
     except:
     #Todo
-        print('holii')
         track = Track.objects.create(
             task=SubTask.objects.get(name=data["task"]),
             rating_0=data["rating_0"],
