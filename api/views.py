@@ -266,8 +266,8 @@ def createTrack(request):
         track = Track.objects.get(task=task)
         serializer = TrackSerializer(track, data=request.data)
         if serializer.is_valid():
+            print("hi")
             serializer.save()
-        track = Track.objects.get(task=task)
     except:
     #Todo
         track = Track.objects.create(
@@ -276,8 +276,8 @@ def createTrack(request):
             rating_1=data["rating_1"],
             user=request.user, 
         )
-    nserializer = TrackSerializer(track, many=False)
-    return Response(nserializer.data)
+    serializer = TrackSerializer(track, many=False)
+    return Response(serializer.data)
 
 @api_view(['PUT'])
 def updateTrack(request, pk):
