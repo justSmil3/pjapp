@@ -275,7 +275,7 @@ def createTrack(request):
             rating_1=data["rating_1"],
             user=request.user, 
         )
-        serializer = TrackSerializer(track, many=False)
+    serializer = TrackSerializer(track, many=False)
     return Response(serializer.data)
 
 @api_view(['PUT'])
