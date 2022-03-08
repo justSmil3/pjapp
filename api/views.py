@@ -66,11 +66,11 @@ def forgot_password(request):
     user = None
     try:
         user = User.objects.get(email=loginname)
-    except ObjectDoesNotexist:
+    except:
         try:
             user = User.objects.get(username=loginname)
             
-        except ObjectDoesNotexist:
+        except:
             return Response({
                     'error': True,
                     'error_msg': serializer.error_messages,
