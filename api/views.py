@@ -73,7 +73,7 @@ def forgot_password(request):
         except:
             return Response({
                     'error': True,
-                    'error_msg': serializer.error_messages,
+                    'error_msg': "did not find user",
                     }, status=status.HTTP_400_BAD_REQUEST)
     
     send_mail(
