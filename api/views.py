@@ -270,6 +270,7 @@ def createTrack(request):
             serializer.save()
     except:
     #Todo
+        print('holii')
         track = Track.objects.create(
             task=SubTask.objects.get(name=data["task"]),
             rating_0=data["rating_0"],
