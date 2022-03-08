@@ -1,5 +1,6 @@
 from django.db.models.lookups import Contains, Range
 from django.db.models.query_utils import subclasses
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import permissions
@@ -65,11 +66,11 @@ def forgot_password(request):
     user = None
     try:
         user = User.objects.get(email=loginname)
-    except DoesNotexist:
+    except User.DoesNotexist:
         try:
             user = User.objects.get(username=loginname)
             
-        except DoesNotexist:
+        except User.DoesNotexist:
             return Response({
                     'error': True,
                     'error_msg': serializer.error_messages,
