@@ -244,17 +244,31 @@ def getTrack(request, pk):
     serializer = TrackSerializer(track, many=False)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getTrackOnTask(request, pk):
+    
+    track = request.user.tracks.get(task=Task.objects.get(id=pk))
+    serializer = TrackSerializer(track, many=False)
+    return Response(serializer.data)
+
 @api_view(['POST'])
 def createTrack(request):
     data = request.data
+    task = SubTask.objects.get(name=data["task"])
+    try:
+        track = Track.objects.get(task=task)
+        serializer = TrackSerializer(track, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+    except:
     #Todo
-    track = Track.objects.create(
-        task=SubTask.objects.get(name=data["task"]),
-        rating_0=data["rating_0"],
-        rating_1=data["rating_1"],
-        user=request.user, 
-    )
-    serializer = TrackSerializer(track, many=False)
+        track = Track.objects.create(
+            task=SubTask.objects.get(name=data["task"]),
+            rating_0=data["rating_0"],
+            rating_1=data["rating_1"],
+            user=request.user, 
+        )
+        serializer = TrackSerializer(track, many=False)
     return Response(serializer.data)
 
 @api_view(['PUT'])
@@ -278,6 +292,12 @@ def deleteTrack(request, pk):
 def getWeights(request):
     weights = request.user.task_weight.all();
     serializer = TaskWeightSerializer(weights, many=True)
+    return Response(serializer.data)
+
+def getWeightOnTask(request, mentiID, taskID):
+    user = User.objects.get(id=mentiID);
+    weight = user.task_weight.get(task=SubTask.objects.get(id=taskID));
+    serializer = TaskWeightSerializer(weight, many=False)
     return Response(serializer.data)
 
 @api_view(['PUT'])
@@ -555,12 +575,19 @@ def getMenti(request):
 @api_view(['POST'])
 def createTaskWeight(request):
     data = request.data
-    weight = TaskWeight.objects.create(
-        weight = int(data['weight']),
-        task = SubTask.objects.get(id = data["task"]),
-        user = User.objects.get(id = data["user"])
-    )
-    serializer = TaskWeightSerializer(weight, many=False)
+    task = SubTask.objects.get(id = data["task"])
+    try:
+        weight = TaskWeight.objects.get(task=task)
+        serializer = TaskWeightSerializer(weight, data=data)
+        if serializer.is_valid():
+            serializer.save()
+    except:
+        weight = TaskWeight.objects.create(
+            weight = int(data['weight']),
+            task = task,
+            user = User.objects.get(id = data["user"])
+        )
+        serializer = TaskWeightSerializer(weight, many=False)
     return Response(serializer.data)
 
 @api_view(['GET'])
