@@ -79,7 +79,7 @@ def forgot_password(request):
     send_mail(
     'Forgot Password',
     f'PJ app user {user.email} forgot his password',
-    'pjapp',
+    'pjapp@outlook.de',
     ['christian.lott@outlook.de'],
     fail_silently=False,
     )
