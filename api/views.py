@@ -267,6 +267,7 @@ def createTrack(request):
         serializer = TrackSerializer(track, data=request.data)
         if serializer.is_valid():
             serializer.save()
+        track = Track.objects.get(task=task)
     except:
     #Todo
         track = Track.objects.create(
