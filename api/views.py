@@ -247,9 +247,16 @@ def getTrack(request, pk):
 @api_view(['GET'])
 def getTrackOnTask(request, pk):
     
-    track = request.user.tracks.get(task=Task.objects.get(id=pk))
-    serializer = TrackSerializer(track, many=False)
-    return Response(serializer.data)
+    try:
+        track = request.user.tracks.get(task=Task.objects.get(id=pk))
+        serializer = TrackSerializer(track, many=False)
+        return Response(serializer.data)
+    
+    except:
+        return Response({
+        'error': True,
+        'error_msg': 'error'
+        })
 
 @api_view(['POST'])
 def createTrack(request):
@@ -295,10 +302,17 @@ def getWeights(request):
     return Response(serializer.data)
 
 def getWeightOnTask(request, mentiID, taskID):
-    user = User.objects.get(id=mentiID);
-    weight = user.task_weight.get(task=SubTask.objects.get(id=taskID));
-    serializer = TaskWeightSerializer(weight, many=False)
-    return Response(serializer.data)
+    
+    try:
+        user = User.objects.get(id=mentiID);
+        weight = user.task_weight.get(task=SubTask.objects.get(id=taskID));
+        serializer = TaskWeightSerializer(weight, many=False)
+        return Response(serializer.data)
+    except:
+        return Response({
+        'error': True,
+        'error_msg': 'error'
+        })
 
 @api_view(['PUT'])
 def updateWeight(request, pk):
