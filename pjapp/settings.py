@@ -150,10 +150,10 @@ REST_FRAMEWORK = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-EMAILEMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAILEMAIL_BACKEND = 'django.core.mail.backends.dummi.EmailBackend'
 
-EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_HOST_USER = 'chritstian.lott@outlook.de'
-EMAIL_HOST_PASSWORD = 'Kanu4ever'
-EMAIL_PORT = 25
-EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp-mail.outlook.com'
+# EMAIL_HOST_USER = 'chritstian.lott@outlook.de'
+# EMAIL_HOST_PASSWORD = 'Kanu4ever'
+# EMAIL_PORT = 25
+#EMAIL_USE_TLS = True
