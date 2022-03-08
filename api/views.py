@@ -1,3 +1,4 @@
+from logging import exception
 from django.db.models.lookups import Contains, Range
 from django.db.models.query_utils import subclasses
 from django.core.exceptions import ObjectDoesNotExist
@@ -252,10 +253,10 @@ def getTrackOnTask(request, pk):
         serializer = TrackSerializer(track, many=False)
         return Response(serializer.data)
     
-    except:
+    except exception as e:
         return Response({
         'error': True,
-        'error_msg': 'error'
+        'error_msg': e
         })
 
 @api_view(['POST'])
