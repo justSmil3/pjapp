@@ -301,6 +301,7 @@ def getWeights(request):
     serializer = TaskWeightSerializer(weights, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
 def getWeightOnTask(request, mentiID, taskID):
     
     try:
@@ -308,10 +309,10 @@ def getWeightOnTask(request, mentiID, taskID):
         weight = user.task_weight.get(task=SubTask.objects.get(id=taskID));
         serializer = TaskWeightSerializer(weight, many=False)
         return Response(serializer.data)
-    except:
+    except Exception as e:
         return Response({
         'error': True,
-        'error_msg': 'error'
+        'error_msg': str(e)
         })
 
 @api_view(['PUT'])
