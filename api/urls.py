@@ -27,6 +27,7 @@ urlpatterns = [
         path('login/', views.login_user),
         path('logout/', views.logout_user),
         path('forgotPassword/', views.forgot_password),
+        path('resetPassword/', views.reset_password),
         path('stats/<int:count>/', views.getStats),
         path('stats/<str:pk>/<int:count>/', views.getUserStats),
         path('weightedStats/<str:pk>/<int:count>/', views.getWeightedStats),

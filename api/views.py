@@ -14,9 +14,12 @@ from django.contrib.auth import authenticate, login, logout
 from knox.models import AuthToken
 from django.core.mail import send_mail
 import json
+from datetime import date, datetime
 
 from api import serializers
 
+users_to_change = []
+currentdate = -1;
 
 @api_view(['GET'])
 def getUsers(request):
@@ -62,8 +65,14 @@ def logout_user(request):
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def forgot_password(request):
+    global currentdate
+    tmpdate = datetime.today().day
+    if not currentdate == tmpdate:
+        users_to_change.clear()
+        currentdate = tmpdate
     loginname = request.data['name'].lower()
     user = None
+    code = request.data['code'];
     try:
         user = User.objects.get(email=loginname)
     except:
@@ -75,15 +84,33 @@ def forgot_password(request):
                     'error': True,
                     'error_msg': "did not find user",
                     }, status=status.HTTP_400_BAD_REQUEST)
-    
+    tmpuser = authenticate(request, username = "resetPasswordUser", password = "a4dfjlasd4jfa345sduf35sdhf")
+    t = login(request, tmpuser)
+    token = AuthToken.objects.create(tmpuser)
+    users_to_change.append(user)
     send_mail(
     'Forgot Password',
-    f'PJ app user {user.email} forgot his password',
+    f'Dein Passwort reset code ist {code}',
     'PjAppMainz@gmail.com',
-    ['christian.lott@outlook.de'],
+    [user.email],
     fail_silently=False,
     )
-    
+    return Response({"token": AuthToken.objects.create(tmpuser)[1]})
+
+@api_view(['POST']) # TODO URGENT this is a huge security risk
+def reset_password(request):
+    global currentdate
+    tmpdate = datetime.today().day
+    if not currentdate == tmpdate:
+        users_to_change.clear()
+        currentdate = tmpdate
+    loginname = request.data['name'].lower()
+    password = request.data['password']
+    user = User.objects.get(username=loginname)
+    if user in users_to_change:
+        user.set_password(password)
+        user.save()
+        users_to_change.remove(user)
     return Response()
 
 
