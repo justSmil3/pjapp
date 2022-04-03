@@ -74,10 +74,10 @@ def forgot_password(request):
     user = None
     code = request.data['code'];
     try:
-        user = User.objects.get(email=loginname)
+        user = User.objects.get(email=loginname).first()
     except:
         try:
-            user = User.objects.get(username=loginname)
+            user = User.objects.get(username=loginname).first()
             
         except:
             return Response({
@@ -95,7 +95,7 @@ def forgot_password(request):
     [user.email],
     fail_silently=False,
     )
-    return Response({"token": AuthToken.objects.create(tmpuser)[1]})
+    return Response({"token": AuthToken.objects.create(tmpuser)[1], "name": user.username})
 
 @api_view(['POST']) # TODO URGENT this is a huge security risk
 def reset_password(request):
