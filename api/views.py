@@ -74,10 +74,10 @@ def forgot_password(request):
     user = None
     code = request.data['code'];
     try:
-        user = User.objects.get(email=loginname).first()
+        user = User.objects.filter(email=loginname).first()
     except:
         try:
-            user = User.objects.get(username=loginname).first()
+            user = User.objects.filter(username=loginname).first()
             
         except:
             return Response({
