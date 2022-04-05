@@ -68,4 +68,5 @@ class Message(models.Model):
 class Menti(models.Model):
     mentor = models.ForeignKey(User, related_name="menti", on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name= "mentor", on_delete=models.CASCADE)
-    name = models.TextField(default="") 
+    name = models.TextField(default="")
+    visable = models.BooleanField(default=True)
