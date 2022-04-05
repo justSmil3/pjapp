@@ -613,7 +613,7 @@ def deleteMessage(request, pk):
     
 @api_view(['GET'])
 def getMenti(request):
-    menti = request.user.menti.get(visable=True)
+    menti = request.user.menti.all().filter(visable=True)
     for x in menti:
         x.name = x.user.username
     serializer = MentiSerializer(menti, many=True)
