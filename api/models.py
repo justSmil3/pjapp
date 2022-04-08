@@ -3,6 +3,21 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class Abteilungen(models.TextChoices):
+    Generel = '0', 'ALL'
+    Augenheilkunde = '1', 'AUGENHEILKUNDE'
+
+class ExtraData(models.Model):
+    user = models.ForeignKey(User, related_name='extra_data', on_delete=models.CASCADE)
+    abteilung = models.CharField(
+        max_length=1,
+        choices=Abteilungen.choices,
+        default=Abteilungen.Generel,
+    )
+    def __str__(self):
+        return self.user.username
+    
+
 class Task(models.Model):
     name = models.TextField()
     description = models.TextField()
@@ -18,7 +33,8 @@ class SubTask(models.Model):
     name = models.TextField()
     description = models.TextField()
     scoreadd = models.IntegerField(default=0)
-
+    classes = models.TextField(default="ALL")
+    
     def __str__(self):
         return self.name
 

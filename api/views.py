@@ -8,7 +8,7 @@ from .serializers import \
     MentiSerializer, TrackSerializer, TaskSerializer, SubtaskSerializer, UserSerializer, TaskWeightSerializer, TokenSerializer, StatsSerializer, MessageSerializer, \
     MentiSerializer
 from rest_framework import status
-from .models import Message, Task, SubTask, Track, TaskWeight, Stats, Message, Menti
+from .models import ExtraData, Message, Task, SubTask, Track, TaskWeight, Stats, Message, Menti
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from knox.models import AuthToken
@@ -217,11 +217,25 @@ def getTask(request, pk):
     serializer = TaskSerializer(task, many=False)
     return Response(serializer.data)
 
-
+@api_view(['GET'])
+def getAllSubtasks(request):
+    subtasks = SubTask.objects.all()
+    serializer = SubtaskSerializer(subtasks, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def getSubtasks(request):
-    subtasks = SubTask.objects.all()
+    ed = request.user.extra_data.get()
+    if not ed:
+        ed = ExtraData.objects.create(
+            user=request.user, 
+        )
+        
+    print(ed.get_abteilung_display())
+    subtasks = SubTask.objects.all().filter(classes__icontains="ALL")
+    userclass = ed.get_abteilung_display()
+    
+    subtasks = subtasks | SubTask.objects.all().filter(classes__icontains = userclass)
     serializer = SubtaskSerializer(subtasks, many=True)
     return Response(serializer.data)
 
