@@ -9,5 +9,5 @@ admin.site.register(SubTask)
 admin.site.register(TaskWeight)
 admin.site.register(Message)
 admin.site.register(Menti)
-admin.site.register(ExtraData)
+# admin.site.register(ExtraData)
 

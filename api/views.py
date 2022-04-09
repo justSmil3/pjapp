@@ -8,7 +8,7 @@ from .serializers import \
     MentiSerializer, TrackSerializer, TaskSerializer, SubtaskSerializer, UserSerializer, TaskWeightSerializer, TokenSerializer, StatsSerializer, MessageSerializer, \
     MentiSerializer
 from rest_framework import status
-from .models import ExtraData, Message, Task, SubTask, Track, TaskWeight, Stats, Message, Menti
+from .models import Message, Task, SubTask, Track, TaskWeight, Stats, Message, Menti
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from knox.models import AuthToken
