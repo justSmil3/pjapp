@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, SubTask, Track, TaskWeight, Message, Menti, ExtraData
+from .models import Task, SubTask, Track, TaskWeight, Message, Menti#, ExtraData
 
 # Register your models here.
 
