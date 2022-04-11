@@ -225,8 +225,9 @@ def getAllSubtasks(request):
 
 @api_view(['GET'])
 def getSubtasks(request):
-    ed = request.user.extra_data.get()
-    if not ed:
+    try:
+        ed = request.user.extra_data.get()
+    except:
         ed = ExtraData.objects.create(
             user=request.user, 
         )
