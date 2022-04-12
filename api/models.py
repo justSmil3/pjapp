@@ -88,4 +88,4 @@ class Menti(models.Model):
     visable = models.BooleanField(default=True)
     
     def __str__(self): 
-        return f"mentor: {mentor.username}; menti: {user.username}"
+        return self.name
