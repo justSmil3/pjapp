@@ -241,6 +241,23 @@ def getSubtasks(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+def getMentiSubtasks(request, pk):
+    try:
+        ed = User.objects.get(id=pk).extra_data.get()
+    except:
+        ed = ExtraData.objects.create(
+            user=User.objects.get(id=pk), 
+        )
+        
+    # print(ed.get_abteil_display())
+    subtasks = SubTask.objects.all().filter(classes__icontains="ALL")
+    userclass = ed.get_abteil_display()
+    
+    subtasks = subtasks | SubTask.objects.all().filter(classes__icontains = userclass)
+    serializer = SubtaskSerializer(subtasks, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def getSubtasksByTask(request, pk):
     task = Task.objects.get(id=pk);
     subtasks = task.subtask.all();

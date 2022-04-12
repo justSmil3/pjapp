@@ -5,6 +5,7 @@ urlpatterns = [
         path('', views.getRoutes),
         path('tasks/',views.getTasks),
         path('subtasks/',views.getSubtasks),
+        path('subtasks/menti/<str:pk>/',views.getMentiSubtasks),
         path('subtasks/all/',views.getAllSubtasks),
         path('subtasksByTask/<str:pk>/', views.getSubtasksByTask),
         path('subtasksOrderedByTask/', views.getSubtasksOrderedByTask),
