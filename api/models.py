@@ -86,3 +86,6 @@ class Menti(models.Model):
     user = models.ForeignKey(User, related_name= "mentor", on_delete=models.CASCADE)
     name = models.TextField(default="")
     visable = models.BooleanField(default=True)
+    
+    def __str__(self): 
+        return f"mentor: {mentor.username}; menti: {user.username}"
