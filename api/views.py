@@ -234,9 +234,9 @@ def getSubtasks(request):
         
     # print(ed.get_abteil_display())
     subtasks = SubTask.objects.all().filter(classes__icontains="ALL")
-    userclass = ed.get_abteil_display()
+    # userclass = ed.get_abteil_display()
     
-    subtasks = subtasks | SubTask.objects.all().filter(classes__icontains = userclass)
+    # subtasks = subtasks | SubTask.objects.all().filter(classes__icontains = userclass)
     serializer = SubtaskSerializer(subtasks, many=True)
     return Response(serializer.data)
 
