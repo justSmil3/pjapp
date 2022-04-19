@@ -233,7 +233,7 @@ def getSubtasks(request):
         )
         
     # print(ed.get_abteil_display())
-    subtasks = SubTask.objects.all().filter(classes__icontains="ALL")
+    subtasks = SubTask.objects.all()#.filter(classes__icontains="ALL")
     # userclass = ed.get_abteil_display()
     
     # subtasks = subtasks | SubTask.objects.all().filter(classes__icontains = userclass)
