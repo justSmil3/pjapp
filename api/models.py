@@ -33,7 +33,11 @@ class SubTask(models.Model):
     name = models.TextField()
     description = models.TextField()
     scoreadd = models.IntegerField(default=0)
-    classes = models.TextField(default="ALL")
+    classes = models.CharField(
+        max_length=1,
+        choices=Abteilungen.choices,
+        default=Abteilungen.Generel,
+    )
     
     def __str__(self):
         return self.name
