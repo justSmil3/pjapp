@@ -10,7 +10,6 @@ class Abteilungen(models.TextChoices):
 class ExtraData(models.Model):
     user = models.ForeignKey(User, related_name='extra_data', on_delete=models.CASCADE)
     abteil = models.CharField(
-        max_length=1,
         choices=Abteilungen.choices,
         default=Abteilungen.Generel,
     )
