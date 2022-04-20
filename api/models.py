@@ -10,6 +10,7 @@ class Abteilungen(models.TextChoices):
 class ExtraData(models.Model):
     user = models.ForeignKey(User, related_name='extra_data', on_delete=models.CASCADE)
     abteil = models.CharField(
+        max_length=50,
         choices=Abteilungen.choices,
         default=Abteilungen.Generel,
     )
@@ -33,7 +34,7 @@ class SubTask(models.Model):
     description = models.TextField()
     scoreadd = models.IntegerField(default=0)
     classes = models.CharField(
-        max_length=1,
+        max_length=50,
         choices=Abteilungen.choices,
         default=Abteilungen.Generel,
     )
