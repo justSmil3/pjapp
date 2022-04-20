@@ -233,10 +233,10 @@ def getSubtasks(request):
         )
         
     print(ed.get_abteil_display())
-    subtasks = SubTask.objects.all()
+    subtasks = SubTask.objects.all().filter(classes="0")
     userclass = ed.get_abteil_display()
     
-    subtasks = subtasks | SubTask.objects.all().filter(classes = userclass)
+    subtasks = subtasks | SubTask.objects.all().filter(classes = str(userclass))
     serializer = SubtaskSerializer(subtasks, many=True)
     return Response(serializer.data)
 
