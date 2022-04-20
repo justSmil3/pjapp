@@ -232,11 +232,11 @@ def getSubtasks(request):
             user=request.user, 
         )
         
-    # print(ed.get_abteil_display())
+    print(ed.get_abteil_display())
     subtasks = SubTask.objects.all().filter(classes="ALL")
     userclass = ed.get_abteil_display()
     
-    subtasks = subtasks | SubTask.objects.all().filter(classes = Abteilungen[userclass])
+    # subtasks = subtasks | SubTask.objects.all().filter(classes = Abteilungen[userclass])
     serializer = SubtaskSerializer(subtasks, many=True)
     return Response(serializer.data)
 
