@@ -237,6 +237,7 @@ def getSubtasks(request):
     userclass = ed.get_abteil_display()
     
     subtasks = subtasks | SubTask.objects.all().filter(classes__icontains = userclass)
+    subtasks = subtasks.order_by("task")
     serializer = SubtaskSerializer(subtasks, many=True)
     return Response(serializer.data)
 
@@ -254,6 +255,7 @@ def getMentiSubtasks(request, pk):
     userclass = ed.get_abteil_display()
     
     subtasks = subtasks | SubTask.objects.all().filter(classes__icontains = userclass)
+    subtasks = subtasks.order_by("task")
     serializer = SubtaskSerializer(subtasks, many=True)
     return Response(serializer.data)
 
