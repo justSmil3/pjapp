@@ -38,6 +38,7 @@ urlpatterns = [
         path('unweightedUserStats/<int:count>/', views.getUnweightedUserStats),
         path('addweightscore/', views.addWeightScore),
         path('messages/<int:start>/<int:count>/', views.getMessage),
+        path('messages/<str:pk>/unread/', views.getUnreadMessagesCount),
         path('mentiMessages/<int:mentiId>/<int:start>/<int:count>/', views.getUserSpecificMessage),
         path('messages/add/', views.createMessage),
         path('messages/<str:pk>/delete/', views.deleteMessage),
