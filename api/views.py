@@ -630,6 +630,7 @@ def getUnreadMessagesCount(request, pk):
 @api_view(['GET'])
 def getUserSpecificMessage(request, mentiId, start, count):
     # make sure to change that in the case that the user gets more than one mentor.
+    User.objects.get(id=mentiId).created_messages.all().update(read=True);
     message = User.objects.get(id=mentiId).created_messages.all() | request.user.created_messages.filter(user = User.objects.get(id=mentiId))
     if count + start > len(message):
         count = len(message) - start
