@@ -84,6 +84,7 @@ class Message(models.Model):
     creator = models.ForeignKey(User, related_name="created_messages", on_delete=models.CASCADE)
     Message = models.TextField(max_length=400)
     created = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(default=False)
     
 class Menti(models.Model):
     mentor = models.ForeignKey(User, related_name="menti", on_delete=models.CASCADE)

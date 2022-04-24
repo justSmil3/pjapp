@@ -609,6 +609,7 @@ def createMessage(request):
 
 @api_view(['GET'])
 def getMessage(request, start, count):
+    request.user.messages.all().update(read=True);
     message = request.user.messages.all() | request.user.created_messages.all()
     if count + start > len(message):
         count = len(message) - start
@@ -619,6 +620,12 @@ def getMessage(request, start, count):
     serializer = MessageSerializer(returnmessages, many=True)
     
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getUnreadMessagesCount(request, pk):
+    messages = User.objects.get(id=pk).created_messages.all().filter(read=False)
+    return Response(json.dumps({'count': len(messages)}),
+                       content_type="application/json")
 
 @api_view(['GET'])
 def getUserSpecificMessage(request, mentiId, start, count):
