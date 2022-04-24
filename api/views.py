@@ -611,7 +611,7 @@ def createMessage(request):
 def getMessage(request, start, count):
     request.user.messages.all().update(read=True);
     mentor = Menti.objects.get(user=request.user).mentor
-    message = request.user.messages.all(creator=mentor) | request.user.created_messages.all()
+    message = request.user.messages.all().filter(creator=mentor) | request.user.created_messages.all()
     if count + start > len(message):
         count = len(message) - start
         if count <= 0: 
