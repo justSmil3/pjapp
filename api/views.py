@@ -610,7 +610,8 @@ def createMessage(request):
 @api_view(['GET'])
 def getMessage(request, start, count):
     request.user.messages.all().update(read=True);
-    message = request.user.messages.all() | request.user.created_messages.all()
+    mentor = request.user.mentor.mentor
+    message = request.user.messages.all(creator=mentor) | request.user.created_messages.all()
     if count + start > len(message):
         count = len(message) - start
         if count <= 0: 
