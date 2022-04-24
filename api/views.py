@@ -610,7 +610,7 @@ def createMessage(request):
 @api_view(['GET'])
 def getMessage(request, start, count):
     request.user.messages.all().update(read=True);
-    mentor = request.user.mentor.mentor
+    mentor = Menti.objects.get(user=request.user).mentor
     message = request.user.messages.all(creator=mentor) | request.user.created_messages.all()
     if count + start > len(message):
         count = len(message) - start
