@@ -8,6 +8,7 @@ class Abteilungen(models.TextChoices):
     Augenheilkunde = 'AUGENHEILKUNDE'
 
 class ExtraData(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, related_name='extra_data', on_delete=models.CASCADE)
     abteil = models.CharField(
         max_length=50,
@@ -43,11 +44,13 @@ class SubTask(models.Model):
         return self.name
 
 class TaskWeight(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
     weight = models.IntegerField()
     task = models.ForeignKey(SubTask, related_name="weight", on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name="task_weight", on_delete=models.CASCADE)
 
 class Track(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
     # TODO reconsider naming
     class Reviews(models.TextChoices):
         KEINE_AUSFÜHRUNG = '0', 'keine ausführrung'
@@ -73,6 +76,7 @@ class Track(models.Model):
         ordering = ['-updated']
         
 class Stats(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
     date = models.DateField()
     score = models.IntegerField()
     
@@ -87,6 +91,7 @@ class Message(models.Model):
     read = models.BooleanField(default=False)
     
 class Menti(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
     mentor = models.ForeignKey(User, related_name="menti", on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name= "mentor", on_delete=models.CASCADE)
     name = models.TextField(default="")

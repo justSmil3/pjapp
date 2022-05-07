@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'django_extensions',
 
     'knox',
 ]
@@ -86,7 +87,7 @@ WSGI_APPLICATION = 'pjapp.wsgi.application'
 DATABASES={
    'default':{
       'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'postgres',
+      'NAME':'pjapp_test',
       'USER':'postgres',
       'PASSWORD':'1234',
       'HOST':'localhost',
