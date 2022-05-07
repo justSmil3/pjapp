@@ -21,6 +21,11 @@ def run():
     
     def job():
         Track.objects.all().filter(created__lt=creation_time).delete()
+        TaskWeight.objects.all().filter(created__lt=creation_time).delete()
+        Stats.objects.all().filter(created__lt=creation_time).delete()
+        Message.objects.all().filter(created__lt=creation_time).delete()
+        Menti.objects.all().filter(created__lt=creation_time).delete()
+        ExtraData.objects.all().filter(created__lt=creation_time).delete()
         
     schedule.every().monday.do(job)
     
