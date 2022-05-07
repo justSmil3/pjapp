@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'pjapp.wsgi.application'
 DATABASES={
    'default':{
       'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'pjapp_test',
+      'NAME':'postgres',
       'USER':'postgres',
       'PASSWORD':'1234',
       'HOST':'localhost',
