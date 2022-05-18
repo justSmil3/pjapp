@@ -3,25 +3,24 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Abteilungen(models.TextChoices):
-    Generel = 'ALL'
-    Augenheilkunde = 'AUGENHEILKUNDE'
-
+# class Abteilungen(models.TextChoices):
+#     Generel = 'ALL'
+#     Augenheilkunde = 'AUGENHEILKUNDE'
+#     RADIOLOGIE = 'RADIOLOGIE'
+class Abteilungen(models.Model):
+    name = models.CharField()
+    
 class ExtraData(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, related_name='extra_data', on_delete=models.CASCADE)
-    abteil = models.CharField(
-        max_length=50,
-        choices=Abteilungen.choices,
-        default=Abteilungen.Generel,
-    )
+    #abteil = models.ForeignKey(Abteilungen, related_name='user', on_delete=models.CASCADE, default=1)
     def __str__(self):
-        return self.user.username
+        return self.user.username# + " | " + self.abteil.name
     
 
 class Task(models.Model):
     name = models.TextField()
-    description = models.TextField()
+    description = models.TextField(blank=True)
     parent = models.ForeignKey("Task", blank=True, related_name="child", null=True,on_delete=models.CASCADE)
 
     def __str__(self):
@@ -32,13 +31,9 @@ class Task(models.Model):
 class SubTask(models.Model):
     task = models.ForeignKey(Task, related_name='subtask', on_delete=models.CASCADE)
     name = models.TextField()
-    description = models.TextField()
+    description = models.TextField(blank=True)
     scoreadd = models.IntegerField(default=0)
-    classes = models.CharField(
-        max_length=50,
-        choices=Abteilungen.choices,
-        default=Abteilungen.Generel,
-    )
+    #classes = models.ForeignKey(Abteilungen, related_name='user', on_delete=models.CASCADE, default=1)
     
     def __str__(self):
         return self.name
