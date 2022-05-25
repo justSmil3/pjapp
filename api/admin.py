@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, SubTask, Track, TaskWeight, Message, Menti, ExtraData
+from .models import Task, SubTask, Track, TaskWeight, Message, Menti, ExtraData, Abteilungen
 
 # Register your models here.
 
@@ -10,4 +10,4 @@ admin.site.register(TaskWeight)
 admin.site.register(Message)
 admin.site.register(Menti)
 admin.site.register(ExtraData)
-
+admin.site.register(Abteilungen)

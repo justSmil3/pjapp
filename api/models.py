@@ -15,7 +15,7 @@ class ExtraData(models.Model):
     user = models.ForeignKey(User, related_name='extra_data', on_delete=models.CASCADE)
     abteil = models.ForeignKey(Abteilungen, related_name='user', on_delete=models.CASCADE, null=True)#, default=1)
     def __str__(self):
-        return self.user.username + " | " + self.abteil.name
+        return self.user.username# + " | " + self.abteil.name
     
 
 class Task(models.Model):
