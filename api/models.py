@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 #     Augenheilkunde = 'AUGENHEILKUNDE'
 #     RADIOLOGIE = 'RADIOLOGIE'
 class Abteilungen(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=50)
     
 class ExtraData(models.Model):
     created = models.DateTimeField(auto_now_add=True)
