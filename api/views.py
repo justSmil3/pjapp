@@ -234,7 +234,7 @@ def getSubtasks(request):
         
     # print(ed.get_abteil_display())
     subtasks = SubTask.objects.all().filter(classes=1)
-    userclass = ed.abteil.get()
+    userclass = ed.abteil
     
     subtasks = subtasks | SubTask.objects.all().filter(classes = userclass)
     subtasks = subtasks.order_by("task")
@@ -252,7 +252,7 @@ def getMentiSubtasks(request, pk):
         
     # print(ed.get_abteil_display())
     subtasks = SubTask.objects.all().filter(classes=1)
-    userclass = ed.abteil.get()
+    userclass = ed.abteil
     
     subtasks = subtasks | SubTask.objects.all().filter(classes = userclass)
     subtasks = subtasks.order_by("task")
