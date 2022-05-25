@@ -33,7 +33,7 @@ class SubTask(models.Model):
     name = models.TextField()
     description = models.TextField(blank=True)
     scoreadd = models.IntegerField(default=0)
-    classes = models.ForeignKey(Abteilungen, related_name='user', on_delete=models.CASCADE, default=1)
+    classes = models.ForeignKey(Abteilungen, related_name='user_abteil', on_delete=models.CASCADE, default=1)
     
     def __str__(self):
         return self.name
