@@ -9,13 +9,15 @@ from django.contrib.auth.models import User
 #     RADIOLOGIE = 'RADIOLOGIE'
 class Abteilungen(models.Model):
     name = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
     
 class ExtraData(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, related_name='extra_data', on_delete=models.CASCADE)
-    abteil = models.ForeignKey(Abteilungen, related_name='user', on_delete=models.CASCADE, null=True)#, default=1)
+    abteil = models.ForeignKey(Abteilungen, related_name='user', on_delete=models.CASCADE, default=1)
     def __str__(self):
-        return self.user.username# + " | " + self.abteil.name
+        return self.user.username + " | " + self.abteil.name
     
 
 class Task(models.Model):
@@ -33,7 +35,7 @@ class SubTask(models.Model):
     name = models.TextField()
     description = models.TextField(blank=True)
     scoreadd = models.IntegerField(default=0)
-    classes = models.ForeignKey(Abteilungen, related_name='user_abteil', on_delete=models.CASCADE, null=True)#, default=1)
+    classes = models.ForeignKey(Abteilungen, related_name='user_abteil', on_delete=models.CASCADE, default=1)
     
     def __str__(self):
         return self.name
