@@ -250,11 +250,12 @@ def getMentiSubtasks(request, pk):
             user=User.objects.get(id=pk), 
         )
         
+        
     # print(ed.get_abteil_display())
     subtasks = SubTask.objects.all().filter(classes=1)
     userclass = ed.abteil
     
-    subtasks = subtasks | SubTask.objects.all().filter(classes = userclass)
+    # subtasks = subtasks | SubTask.objects.all().filter(classes = userclass)
     subtasks = subtasks.order_by("task")
     serializer = SubtaskSerializer(subtasks, many=True)
     return Response(serializer.data)
