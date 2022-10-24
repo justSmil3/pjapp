@@ -232,7 +232,7 @@ def getSubtasks(request):
             user=request.user, 
         )
         
-    subtasks = SubTask.objects.all().filter(classes=0)
+    subtasks = SubTask.objects.all().filter(classes=1)
     userclass = ed.abteil
     
     subtasks = subtasks | SubTask.objects.all().filter(classes = userclass)
