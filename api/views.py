@@ -232,9 +232,9 @@ def getSubtasks(request):
             user=request.user, 
         )
         
-    print(ed.get_abteil_display())
     subtasks = SubTask.objects.all().filter(classes=1)
     userclass = ed.abteil
+    print(userclass)
     
     subtasks = subtasks | SubTask.objects.all().filter(classes = userclass)
     subtasks = subtasks.order_by("task")
