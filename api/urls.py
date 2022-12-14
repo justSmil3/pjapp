@@ -1,3 +1,20 @@
+##################################################################################################################################
+# in diesem fall sind alle urls der api aufgeführt. diese können über die webadresse/[erster path parameter]/ erreicht werden.
+# verbunden werden die urls über einen path, welcher die url mit der views funktion verbindet.
+# diese urls werden in einem array zusammen geführt und in dem urls.py in der pjapp location zu der gesamten url ansamlung 
+# hinzugefügt.
+#
+# neben dem senden von daten über das json format in dem api call kan man auch variablen über die url selbst versenden. diese können
+# in der funktion als input parameter verwendet werden. In der URL definiert man diese variablen über <[datatype(z.b. str)]:[name]>
+# und gecalled werden sie dann einfach über das einfügen der value in der url. 
+# Beispiel: 
+# url definiton : path('subtasks/menti/<str:pk>/',views.getMentiSubtasks)
+# call          : webadresse/subtasks/menti/0/       <- this for example gets the subtasks of the menti with id 0 because 0 gets 
+#                                                       fed into views.getMentiSubtasks.
+##################################################################################################################################
+
+
+
 from django.urls import path
 from . import views
 

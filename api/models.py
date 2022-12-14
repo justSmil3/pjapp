@@ -1,3 +1,15 @@
+#############################################################################################################################
+# in diesem file werden die tabellen in der datenbank definiert. ein model ist dabei eine tabelle in der datenbank. 
+# zum definierem des models definiert man eine classe die models.Model inherited. man kan darauf hin die felder der tabelle 
+# definieren als variable welche als model field declariert wird. 
+# die function __str__(self): ist hierbei eine function die einen string returned. Bei diesem string handelt es sich um den 
+# namen den einzelne instancen in der tabellenansicht im adminpanel tragen.
+# 
+# nach dem erstellen des models / der tabelle muss noch ein serializer in dem file serializers.py erstellt werden, falls
+# man elemente der datei als json im rahmen eines api calls versenden will.
+#############################################################################################################################
+
+
 from django.db import models
 from django.contrib.auth.models import User
 

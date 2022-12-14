@@ -1,3 +1,11 @@
+###############################################################################################################################
+# ein serializer wird als class definiert welche von der class ModelSerializer inherited. in der subclass Meta wird
+# das betroffene model / die tabelle definiert und die felder, welche serializiert werden sollen, angegeben.
+# falls man keine spezifischen felder serializieren will (was über eine liste gemacht wird: ('bsp1','bsp2','bsp3')), 
+# kann man den macro '__all__' verwenden.
+###############################################################################################################################
+
+
 from django.db.models import fields
 from rest_framework.serializers import ModelSerializer
 from .models import Track, Task, SubTask, TaskWeight, Stats, Message, Menti

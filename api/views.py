@@ -1,3 +1,22 @@
+##################################################################################################################################
+# In diesem file sind alle funktionen definiert, welche per API request angesteuert werden können.
+# Es gibt mehrere arten so eine funktion zu definieren. Die hier verwendete ist über den decorator api_view,
+# der einen parameter nimmt der entweder GET, POST oder PUT ist. GET beschreibt eine funktion die daten von der 
+# datenbank abgreift. POST beschreibt eine funktion die daten auf die datenbank schiebt / "posted".
+# PUT beschreibt eine funktion die daten auf der datenbank mit neuen daten aus der request updated.
+# eine funktion benötigt als parameter immer die request selber, naming convention ist dabei diesen parameter request zu nennen.
+# daten können als json in einer api request mit gesendet werden. man kan über den handler request.data auf diese json zugreifen
+# und dann wie in einem dictionary auf diese daten zugreifen, als beispiel: 
+# json file: 
+# {
+#  "example": "1234",   
+# }
+# print(request.data["example"]) prints out 1234.
+# 
+# eine api funktion muss als return eine Response zurücksenden, die data im json format sowie einen http status sowie zum beispiel 
+# den status 400, bad request tragen kann.
+#################################################################################################################################
+
 from django.db.models.lookups import Contains, Range
 from django.db.models.query_utils import subclasses
 from django.core.exceptions import ObjectDoesNotExist
